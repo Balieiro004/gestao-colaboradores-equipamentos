@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,24 +26,22 @@ public class Colaborador extends Pessoa{
     @Size(min = 6, max = 100, message = "A senha deve ter entre 6 e 100 caracteres")
     private String password;
 
-//    @NotNull(message = "O sistema operacional é obrigatório")
     @Enumerated(EnumType.STRING)
     private SistemaOperacional sistemaOperacional;
 
-    @OneToMany(mappedBy = "colaborador")
-    private List<Equipamento> equipamentos;
+    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL)
+    private List<Equipamento> equipamentos = new ArrayList<>();
 
-    public Colaborador(String nome, LocalDate dataInicio, long id, String userName, String password, SistemaOperacional sistemaOperacional, List<Equipamento> equipamentos) {
+    public Colaborador() {
+        super();
+    }
+
+    public Colaborador(String nome, LocalDate dataInicio, long id, String userName, String password, SistemaOperacional sistemaOperacional) {
         super(nome, dataInicio);
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.sistemaOperacional = sistemaOperacional;
-        this.equipamentos = equipamentos;
-    }
-
-    public Colaborador() {
-        super();
     }
 
     public long getId() {

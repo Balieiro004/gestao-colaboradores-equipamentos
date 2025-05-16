@@ -15,6 +15,13 @@ public class ColaboradorController {
     @Autowired
     private ColaboradorService colaboradorService;
 
+    //Salvar Colaborador
+    @PostMapping
+    public ResponseEntity<Colaborador> salve(@RequestBody Colaborador colaborador) {
+        Colaborador entity = colaboradorService.salve(colaborador);
+        return  ResponseEntity.ok().body(entity);
+    }
+
     //Buscar todos
     @GetMapping
     public ResponseEntity<List<Colaborador>> findAll() {
@@ -22,11 +29,11 @@ public class ColaboradorController {
         return ResponseEntity.ok().body(list);
     }
 
-    //Salvar Colaborador
-    @PostMapping
-    public ResponseEntity<Colaborador> salve(@RequestBody Colaborador colaborador) {
-        Colaborador entity = colaboradorService.salve(colaborador);
-        return  ResponseEntity.ok().body(entity);
+    //Busca por id
+    @GetMapping(value = {"/{id}"})
+    public ResponseEntity<Colaborador> findById(@PathVariable Long id) {
+        Colaborador entity = colaboradorService.findById(id);
+        return ResponseEntity.ok().body(entity);
     }
 
 }

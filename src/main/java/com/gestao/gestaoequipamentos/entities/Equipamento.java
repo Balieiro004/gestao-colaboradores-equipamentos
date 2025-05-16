@@ -2,13 +2,7 @@ package com.gestao.gestaoequipamentos.entities;
 
 import com.gestao.gestaoequipamentos.entities.Enums.TipoEquipamento;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "tb_equipamento")
 public class Equipamento {
@@ -27,4 +21,66 @@ public class Equipamento {
     @ManyToOne
     @JoinColumn(name = "colaborador_id")
     private Colaborador colaborador;
+
+
+    public Equipamento() {
+
+    }
+
+    public Equipamento(long idEquipamento, TipoEquipamento tipoEquipamento, String modelo, String serviceTag, int contratoLeasing) {
+        this.idEquipamento = idEquipamento;
+        this.tipoEquipamento = tipoEquipamento;
+        this.modelo = modelo;
+        this.serviceTag = serviceTag;
+        this.contratoLeasing = contratoLeasing;
+
+    }
+
+    public long getIdEquipamento() {
+        return idEquipamento;
+    }
+
+    public void setIdEquipamento(long idEquipamento) {
+        this.idEquipamento = idEquipamento;
+    }
+
+    public TipoEquipamento getTipoEquipamento() {
+        return tipoEquipamento;
+    }
+
+    public void setTipoEquipamento(TipoEquipamento tipoEquipamento) {
+        this.tipoEquipamento = tipoEquipamento;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getServiceTag() {
+        return serviceTag;
+    }
+
+    public void setServiceTag(String serviceTag) {
+        this.serviceTag = serviceTag;
+    }
+
+    public int getContratoLeasing() {
+        return contratoLeasing;
+    }
+
+    public void setContratoLeasing(int contratoLeasing) {
+        this.contratoLeasing = contratoLeasing;
+    }
+
+    public Colaborador getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
+    }
 }
