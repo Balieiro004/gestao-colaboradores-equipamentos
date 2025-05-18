@@ -3,6 +3,7 @@ package com.gestao.gestaoequipamentos.service;
 import com.gestao.gestaoequipamentos.entities.Colaborador;
 import com.gestao.gestaoequipamentos.repositories.ColaboradorRepository;
 import com.gestao.gestaoequipamentos.service.exceptions.ControllerNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,25 @@ public class ColaboradorService {
         return entity;
     }
 
-
     //Busca por Nome
+    public List<Colaborador> findByNome(String nome) {
+        return colaboradorRepository.findByNomeContainingIgnoreCase(nome);
+    }
+
+    //Atualizar
+    @Transactional
+    public Colaborador update(Long id, Colaborador colaborador) {
+        try{
+            Colaborador entity  = colaboradorRepository.getReferenceById(id);
+            entity.setNome(colaborador.getNome());
+            entity.setDataInicio(colaborador.getDataInicio());
+            entity.setNome(colaborador.getUserName());
+            entity.setPassword(colaborador.getPassword());
+            entity = colaboradorRepository.save(entity);
+            return entity;
+        }catch (EntityNotFoundException e) {
+            throw new ControllerNotFoundException("Colaborador não encontrado");
+        }
+    }
+
 }

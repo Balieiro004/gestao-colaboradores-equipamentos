@@ -15,7 +15,7 @@ public class ColaboradorController {
     @Autowired
     private ColaboradorService colaboradorService;
 
-    //Salvar Colaborador
+    //Adicionar novo Colaborador
     @PostMapping
     public ResponseEntity<Colaborador> salve(@RequestBody Colaborador colaborador) {
         Colaborador entity = colaboradorService.salve(colaborador);
@@ -30,9 +30,27 @@ public class ColaboradorController {
     }
 
     //Busca por id
-    @GetMapping(value = {"/{id}"})
+    @GetMapping(value = {"/id/{id}"})
     public ResponseEntity<Colaborador> findById(@PathVariable Long id) {
         Colaborador entity = colaboradorService.findById(id);
+        return ResponseEntity.ok().body(entity);
+    }
+
+    //Buscar por nome
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<Colaborador>> findByNome(@PathVariable String nome) {
+        List<Colaborador> colaboradores = colaboradorService.findByNome(nome);
+
+        if (colaboradores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(colaboradores);
+    }
+
+    //atualizar
+    @PutMapping("/{id}")
+    public ResponseEntity<Colaborador> update(@PathVariable Long id, @RequestBody Colaborador colaborador) {
+        Colaborador entity = colaboradorService.update(id, colaborador);
         return ResponseEntity.ok().body(entity);
     }
 

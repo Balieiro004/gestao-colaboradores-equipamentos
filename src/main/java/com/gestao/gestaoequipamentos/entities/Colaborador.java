@@ -1,4 +1,5 @@
 package com.gestao.gestaoequipamentos.entities;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gestao.gestaoequipamentos.entities.Enums.SistemaOperacional;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "tb_colaborador")
 public class Colaborador extends Pessoa{
