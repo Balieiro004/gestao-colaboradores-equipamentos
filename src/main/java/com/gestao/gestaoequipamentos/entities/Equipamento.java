@@ -1,5 +1,6 @@
 package com.gestao.gestaoequipamentos.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gestao.gestaoequipamentos.entities.Enums.TipoEquipamento;
 import jakarta.persistence.*;
 
@@ -15,11 +16,14 @@ public class Equipamento {
     private TipoEquipamento tipoEquipamento;
 
     private String modelo;
+
+    @Column(unique = true)
     private String serviceTag;
     private int contratoLeasing;
 
     @ManyToOne
     @JoinColumn(name = "colaborador_id")
+    @JsonBackReference
     private Colaborador colaborador;
 
 

@@ -54,4 +54,18 @@ public class ColaboradorController {
         return ResponseEntity.ok().body(entity);
     }
 
+    //Vincular Equipamento ao Colaborador
+    @PostMapping("/{colaboradorId}/equipamentos/{equipamentoId}")
+    public ResponseEntity<Colaborador> vincularEquipamento(@PathVariable Long colaboradorId, @PathVariable Long equipamentoId) {
+        Colaborador entity = colaboradorService.vincularEquipamento(colaboradorId, equipamentoId);
+        return ResponseEntity.ok().body(entity);
+    }
+
+    //Remover equipamento do colaborador
+    @DeleteMapping("/{colaboradorId}/equipamentos/{equipamentoId}")
+    public ResponseEntity<Colaborador> desvincularEquipamento(@PathVariable Long colaboradorId, @PathVariable Long equipamentoId) {
+        Colaborador entity = colaboradorService.desvincularEquipamento(colaboradorId, equipamentoId);
+        return ResponseEntity.ok().body(entity);
+    }
+
 }

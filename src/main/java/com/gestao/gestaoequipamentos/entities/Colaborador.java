@@ -1,5 +1,6 @@
 package com.gestao.gestaoequipamentos.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gestao.gestaoequipamentos.entities.Enums.SistemaOperacional;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -31,7 +32,8 @@ public class Colaborador extends Pessoa{
     @Enumerated(EnumType.STRING)
     private SistemaOperacional sistemaOperacional;
 
-    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Equipamento> equipamentos = new ArrayList<>();
 
     public Colaborador() {
@@ -84,5 +86,15 @@ public class Colaborador extends Pessoa{
 
     public void setEquipamentos(List<Equipamento> equipamentos) {
         this.equipamentos = equipamentos;
+    }
+
+    public void adicionarEquipamento(Equipamento equipamento) {
+       this.equipamentos.add(equipamento);
+        equipamento.setColaborador(this);
+    }
+
+    public void removerEquipamento(Equipamento equipamento) {
+        this.equipamentos.remove(equipamento);
+        equipamento.setColaborador(null);
     }
 }

@@ -1,7 +1,9 @@
 package com.gestao.gestaoequipamentos.service;
 
 import com.gestao.gestaoequipamentos.entities.Colaborador;
+import com.gestao.gestaoequipamentos.entities.Equipamento;
 import com.gestao.gestaoequipamentos.repositories.ColaboradorRepository;
+import com.gestao.gestaoequipamentos.repositories.EquipamentosRepository;
 import com.gestao.gestaoequipamentos.service.exceptions.ControllerNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -16,6 +18,9 @@ public class ColaboradorService {
 
     @Autowired
     private ColaboradorRepository colaboradorRepository;
+
+    @Autowired
+    private EquipamentosRepository equipamentosRepository;
 
     //Salvar novo colaborador
     @Transactional
@@ -54,6 +59,26 @@ public class ColaboradorService {
         }catch (EntityNotFoundException e) {
             throw new ControllerNotFoundException("Colaborador não encontrado");
         }
+    }
+
+    @Transactional
+    public Colaborador vincularEquipamento(Long colaboradorId, Long equipamentoId) {
+        Colaborador colaborador = colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new ControllerNotFoundException("Colaborador não encontrado"));
+
+        Equipamento equipamento = equipamentosRepository.findById(equipamentoId).orElseThrow(() -> new ControllerNotFoundException("Equipamento não encontrado"));
+
+        colaborador.adicionarEquipamento(equipamento);
+        return colaboradorRepository.save(colaborador);
+    }
+
+    @Transactional
+    public Colaborador desvincularEquipamento(Long colaboradorId, Long equipamentoId) {
+        Colaborador colaborador = colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new ControllerNotFoundException("Colaborador não encontrado"));
+
+        Equipamento equipamento = equipamentosRepository.findById(equipamentoId).orElseThrow(() -> new ControllerNotFoundException("Equipamento não encontrado"));
+
+        colaborador.removerEquipamento(equipamento);
+        return colaboradorRepository.save(colaborador);
     }
 
 }
