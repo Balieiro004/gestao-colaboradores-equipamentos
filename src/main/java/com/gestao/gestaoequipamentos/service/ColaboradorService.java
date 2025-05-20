@@ -35,8 +35,7 @@ public class ColaboradorService {
 
     //Busca por ID
     public Colaborador findById(Long id) {
-        Optional<Colaborador> colaborador = colaboradorRepository.findById(id);
-        Colaborador entity = colaborador.orElseThrow(() -> new ControllerNotFoundException("Colaborador não encontrado"));
+        Colaborador entity = buscarColaboradorPorId(id);
         return entity;
     }
 
@@ -63,9 +62,8 @@ public class ColaboradorService {
 
     @Transactional
     public Colaborador vincularEquipamento(Long colaboradorId, Long equipamentoId) {
-        Colaborador colaborador = colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new ControllerNotFoundException("Colaborador não encontrado"));
-
-        Equipamento equipamento = equipamentosRepository.findById(equipamentoId).orElseThrow(() -> new ControllerNotFoundException("Equipamento não encontrado"));
+        Colaborador colaborador = buscarColaboradorPorId(colaboradorId);
+        Equipamento equipamento = buscarEquipamentoPorId(equipamentoId);
 
         colaborador.adicionarEquipamento(equipamento);
         return colaboradorRepository.save(colaborador);
@@ -73,12 +71,20 @@ public class ColaboradorService {
 
     @Transactional
     public Colaborador desvincularEquipamento(Long colaboradorId, Long equipamentoId) {
-        Colaborador colaborador = colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new ControllerNotFoundException("Colaborador não encontrado"));
 
-        Equipamento equipamento = equipamentosRepository.findById(equipamentoId).orElseThrow(() -> new ControllerNotFoundException("Equipamento não encontrado"));
+        Colaborador colaborador = buscarColaboradorPorId(colaboradorId);
+        Equipamento equipamento = buscarEquipamentoPorId(equipamentoId);
 
         colaborador.removerEquipamento(equipamento);
         return colaboradorRepository.save(colaborador);
+    }
+
+    private Colaborador buscarColaboradorPorId(Long colaboradorId) {
+        return colaboradorRepository.findById(colaboradorId).orElseThrow(() -> new ControllerNotFoundException("Colaborador não encontrado"));
+    }
+
+    private Equipamento buscarEquipamentoPorId(Long equipamentoId) {
+        return equipamentosRepository.findById(equipamentoId).orElseThrow(() -> new ControllerNotFoundException("Equipamento não encontrado"));
     }
 
 }

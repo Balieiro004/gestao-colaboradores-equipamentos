@@ -32,7 +32,7 @@ public class Colaborador extends Pessoa{
     @Enumerated(EnumType.STRING)
     private SistemaOperacional sistemaOperacional;
 
-    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Equipamento> equipamentos = new ArrayList<>();
 

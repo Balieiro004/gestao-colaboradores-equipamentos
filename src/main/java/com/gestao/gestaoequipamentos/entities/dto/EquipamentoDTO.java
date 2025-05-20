@@ -1,50 +1,37 @@
-package com.gestao.gestaoequipamentos.entities;
+package com.gestao.gestaoequipamentos.entities.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gestao.gestaoequipamentos.entities.Enums.TipoEquipamento;
-import jakarta.persistence.*;
+import com.gestao.gestaoequipamentos.entities.Equipamento;
 
-@Entity
-@Table(name = "tb_equipamento")
-public class Equipamento {
+public class EquipamentoDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idEquipamento;
-
-    @Enumerated(EnumType.STRING)
+    private Long idEquipamento;
     private TipoEquipamento tipoEquipamento;
-
     private String modelo;
-
-    @Column(unique = true)
     private String serviceTag;
     private Long contratoLeasing;
+    private ColaboradorResumoDTO colaborador;
 
-    @ManyToOne
-    @JoinColumn(name = "colaborador_id")
-    @JsonBackReference
-    private Colaborador colaborador;
-
-
-    public Equipamento() {
+    public EquipamentoDTO() {
 
     }
 
-    public Equipamento(long idEquipamento, TipoEquipamento tipoEquipamento, String modelo, String serviceTag, long contratoLeasing) {
-        this.idEquipamento = idEquipamento;
-        this.tipoEquipamento = tipoEquipamento;
-        this.modelo = modelo;
-        this.serviceTag = serviceTag;
-        this.contratoLeasing = contratoLeasing;
-
+    public EquipamentoDTO(Equipamento equipamento) {
+        this.idEquipamento = equipamento.getIdEquipamento();
+        this.tipoEquipamento = equipamento.getTipoEquipamento();
+        this.modelo = equipamento.getModelo();
+        this.serviceTag = equipamento.getServiceTag();
+        this.contratoLeasing = (long) equipamento.getContratoLeasing();
+        if (equipamento.getColaborador() != null) {
+            this.colaborador = new ColaboradorResumoDTO(equipamento.getColaborador());
+        }
     }
 
-    public long getIdEquipamento() {
+    public Long getIdEquipamento() {
         return idEquipamento;
     }
 
-    public void setIdEquipamento(long idEquipamento) {
+    public void setIdEquipamento(Long idEquipamento) {
         this.idEquipamento = idEquipamento;
     }
 
@@ -80,11 +67,11 @@ public class Equipamento {
         this.contratoLeasing = contratoLeasing;
     }
 
-    public Colaborador getColaborador() {
+    public ColaboradorResumoDTO getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(Colaborador colaborador) {
+    public void setColaborador(ColaboradorResumoDTO colaborador) {
         this.colaborador = colaborador;
     }
 }

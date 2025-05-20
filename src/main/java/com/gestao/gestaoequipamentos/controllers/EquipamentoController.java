@@ -2,6 +2,7 @@ package com.gestao.gestaoequipamentos.controllers;
 
 import com.gestao.gestaoequipamentos.entities.Colaborador;
 import com.gestao.gestaoequipamentos.entities.Equipamento;
+import com.gestao.gestaoequipamentos.entities.dto.EquipamentoDTO;
 import com.gestao.gestaoequipamentos.service.ColaboradorService;
 import com.gestao.gestaoequipamentos.service.EquipamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,37 +25,28 @@ public class EquipamentoController {
         return  ResponseEntity.ok().body(entity);
     }
 
-//    //Buscar todos
-//    @GetMapping
-//    public ResponseEntity<List<Colaborador>> findAll() {
-//        List<Colaborador> list = colaboradorService.findAll();
-//        return ResponseEntity.ok().body(list);
-//    }
-//
-//    //Busca por id
-//    @GetMapping(value = {"/id/{id}"})
-//    public ResponseEntity<Colaborador> findById(@PathVariable Long id) {
-//        Colaborador entity = colaboradorService.findById(id);
-//        return ResponseEntity.ok().body(entity);
-//    }
-//
-//    //Buscar por nome
-//    @GetMapping("/nome/{nome}")
-//    public ResponseEntity<List<Colaborador>> findByNome(@PathVariable String nome) {
-//        List<Colaborador> colaboradores = colaboradorService.findByNome(nome);
-//
-//        if (colaboradores.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(colaboradores);
-//    }
-//
-//    //atualizar
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Colaborador> update(@PathVariable Long id, @RequestBody Colaborador colaborador) {
-//        Colaborador entity = colaboradorService.update(id, colaborador);
-//        return ResponseEntity.ok().body(entity);
-//    }
+    //Buscar todos
+    @GetMapping
+    public ResponseEntity<List<EquipamentoDTO>> findAll() {
+        List<EquipamentoDTO> list = equipamentoService.findAll();
+        return ResponseEntity.ok().body(list);
+    }
+
+    //Busca por id
+    @GetMapping(value = {"/id/{id}"})
+    public ResponseEntity<EquipamentoDTO> findById(@PathVariable Long id) {
+        Equipamento equipamento = equipamentoService.findById(id);
+        EquipamentoDTO dto = new EquipamentoDTO(equipamento);
+        return ResponseEntity.ok().body(dto);
+    }
+
+
+    //atualizar
+    @PutMapping("/{id}")
+    public ResponseEntity<EquipamentoDTO> update(@PathVariable Long id, @RequestBody EquipamentoDTO dto) {
+        Equipamento equipamentoAtualizado = equipamentoService.update(id, dto);
+        return ResponseEntity.ok(new EquipamentoDTO(equipamentoAtualizado));
+    }
 //
 //    @PostMapping("/{colaboradorId}/equipamentos/{equipamentoId}")
 //    public ResponseEntity<Void> vincularEquipamento(@PathVariable Long colaboradorId, @PathVariable Long equipamentoId) {
