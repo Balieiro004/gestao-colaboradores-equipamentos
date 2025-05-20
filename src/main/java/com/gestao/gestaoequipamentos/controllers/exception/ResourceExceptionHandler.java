@@ -3,6 +3,8 @@ package com.gestao.gestaoequipamentos.controllers.exception;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.gestao.gestaoequipamentos.service.exceptions.ControllerNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -57,4 +59,39 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandarError>handleDataIntegrityViolation(DataIntegrityViolationException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String message = "Verifique se os campos únicos já não estão sendo utilizados.";
+
+        if (e.getMessage() != null && e.getMessage().contains("SERVICE_TAG")) {
+            message = "Já existe um equipamento cadastrado com essa Service Tag.";
+        }
+
+        StandarError error = new StandarError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Data Integrity Violation");
+        error.setMessage(message);
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<StandarError> handleConstraintViolation(ConstraintViolationException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        String message = e.getConstraintViolations().stream().map(violation -> violation.getMessage()).collect(Collectors.joining("; "));
+
+        StandarError error = new StandarError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Validation Error");
+        error.setMessage(message);
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
 }

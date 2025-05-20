@@ -3,6 +3,8 @@ package com.gestao.gestaoequipamentos.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gestao.gestaoequipamentos.entities.Enums.TipoEquipamento;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_equipamento")
@@ -18,6 +20,7 @@ public class Equipamento {
     private String modelo;
 
     @Column(unique = true)
+    @NotBlank(message = "A Service tag é obrigatória")
     private String serviceTag;
     private Long contratoLeasing;
 
