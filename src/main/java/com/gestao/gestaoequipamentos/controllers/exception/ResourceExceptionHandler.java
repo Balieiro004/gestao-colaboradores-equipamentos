@@ -2,6 +2,7 @@ package com.gestao.gestaoequipamentos.controllers.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.gestao.gestaoequipamentos.service.exceptions.ControllerNotFoundException;
+import com.gestao.gestaoequipamentos.service.exceptions.DatabaseException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -90,6 +91,20 @@ public class ResourceExceptionHandler {
         error.setStatus(status.value());
         error.setError("Validation Error");
         error.setMessage(message);
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandarError> database(DatabaseException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandarError error = new StandarError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Violação de integridade");
+        error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
 
         return ResponseEntity.status(status).body(error);

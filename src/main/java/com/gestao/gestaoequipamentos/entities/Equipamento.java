@@ -22,6 +22,8 @@ public class Equipamento {
     @Column(unique = true)
     @NotBlank(message = "A Service tag é obrigatória")
     private String serviceTag;
+
+    @NotNull
     private Long contratoLeasing;
 
     @ManyToOne
