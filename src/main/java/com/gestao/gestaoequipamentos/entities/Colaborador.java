@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -96,4 +97,18 @@ public class Colaborador extends Pessoa{
         this.equipamentos.remove(equipamento);
         equipamento.setColaborador(null);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Colaborador that = (Colaborador) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

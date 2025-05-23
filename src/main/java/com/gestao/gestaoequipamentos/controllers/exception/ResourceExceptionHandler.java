@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -109,5 +111,23 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
     }
+
+
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<StandarError> handleIllegalState(IllegalStateException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandarError error = new StandarError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Violação de regra de negócio");
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+
 
 }

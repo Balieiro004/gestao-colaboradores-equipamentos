@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -64,6 +65,11 @@ public class ColaboradorService {
     public Colaborador vincularEquipamento(Long colaboradorId, Long equipamentoId) {
         Colaborador colaborador = buscarColaboradorPorId(colaboradorId);
         Equipamento equipamento = buscarEquipamentoPorId(equipamentoId);
+
+        if (equipamento.getColaborador() != null && !Objects.equals(equipamento.getColaborador().getId(), colaboradorId)) {
+            throw new IllegalStateException("Este equipamento já está vinculado a outro colaborador.");
+        }
+
 
         colaborador.adicionarEquipamento(equipamento);
         return colaboradorRepository.save(colaborador);
