@@ -22,8 +22,10 @@ public class Colaborador extends Pessoa{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
     @NotBlank(message = "O nome de usuário não pode estar em branco")
     @Size(min = 3, max = 50, message = "O nome de usuário deve ter entre 3 e 50 caracteres")
+    @Column(unique = true)
     private String userName;
     
     @Size(min = 6, max = 100, message = "A senha deve ter entre 6 e 100 caracteres")

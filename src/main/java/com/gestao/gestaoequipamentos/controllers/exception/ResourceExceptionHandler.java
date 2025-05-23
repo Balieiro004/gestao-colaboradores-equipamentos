@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -67,8 +65,14 @@ public class ResourceExceptionHandler {
         HttpStatus status = HttpStatus.CONFLICT;
         String message = "Verifique se os campos únicos já não estão sendo utilizados.";
 
-        if (e.getMessage() != null && e.getMessage().contains("SERVICE_TAG")) {
-            message = "Já existe um equipamento cadastrado com essa Service Tag.";
+        String exceptionMessage = e.getMostSpecificCause().getMessage();
+
+        if (exceptionMessage != null) {
+            if (exceptionMessage.contains("SERVICE_TAG")) {
+                message = "Já existe um equipamento cadastrado com essa Service Tag.";
+            } else if (exceptionMessage.contains("USER_NAME") || exceptionMessage.contains("user_name")) {
+                message = "Já existe um colaborador cadastrado com esse nome de usuário.";
+            }
         }
 
         StandarError error = new StandarError();
