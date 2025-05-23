@@ -5,7 +5,8 @@ public enum SistemaOperacional {
     UBUNTUCOMPASS(2),
     UBUNTUIFOOD(3),
     WINDOWSPAG(4),
-    WINDOWSCOMPASS(5);
+    WINDOWSCOMPASS(5),
+    SEQUOIA(6);
 
     private int code;
 

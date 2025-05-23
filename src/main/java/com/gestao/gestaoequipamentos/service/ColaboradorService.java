@@ -52,7 +52,7 @@ public class ColaboradorService {
             entity.setNome(colaborador.getNome());
             entity.setDataInicio(colaborador.getDataInicio());
             entity.setNome(colaborador.getUserName());
-            entity.setPassword(colaborador.getPassword());
+            entity.setUserPassword(colaborador.getUserPassword());
             entity = colaboradorRepository.save(entity);
             return entity;
         }catch (EntityNotFoundException e) {

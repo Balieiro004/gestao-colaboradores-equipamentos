@@ -24,10 +24,9 @@ public class Colaborador extends Pessoa{
     @NotBlank(message = "O nome de usuário não pode estar em branco")
     @Size(min = 3, max = 50, message = "O nome de usuário deve ter entre 3 e 50 caracteres")
     private String userName;
-
-
+    
     @Size(min = 6, max = 100, message = "A senha deve ter entre 6 e 100 caracteres")
-    private String password;
+    private String userPassword;
 
     @Enumerated(EnumType.STRING)
     private SistemaOperacional sistemaOperacional;
@@ -40,11 +39,11 @@ public class Colaborador extends Pessoa{
         super();
     }
 
-    public Colaborador(String nome, LocalDate dataInicio, long id, String userName, String password, SistemaOperacional sistemaOperacional) {
+    public Colaborador(String nome, LocalDate dataInicio, long id, String userName, String userPassword, SistemaOperacional sistemaOperacional) {
         super(nome, dataInicio);
         this.id = id;
         this.userName = userName;
-        this.password = password;
+        this.userPassword = userPassword;
         this.sistemaOperacional = sistemaOperacional;
     }
 
@@ -64,12 +63,12 @@ public class Colaborador extends Pessoa{
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public SistemaOperacional getSistemaOperacional() {

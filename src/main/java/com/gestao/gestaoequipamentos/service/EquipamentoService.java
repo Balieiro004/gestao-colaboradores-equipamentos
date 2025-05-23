@@ -1,6 +1,5 @@
 package com.gestao.gestaoequipamentos.service;
 
-import com.gestao.gestaoequipamentos.entities.Colaborador;
 import com.gestao.gestaoequipamentos.entities.Equipamento;
 import com.gestao.gestaoequipamentos.entities.dto.EquipamentoDTO;
 import com.gestao.gestaoequipamentos.repositories.EquipamentosRepository;
@@ -8,12 +7,9 @@ import com.gestao.gestaoequipamentos.service.exceptions.ControllerNotFoundExcept
 import com.gestao.gestaoequipamentos.service.exceptions.DatabaseException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
