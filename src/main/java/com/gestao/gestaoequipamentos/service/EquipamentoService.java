@@ -50,7 +50,8 @@ public class EquipamentoService {
 
     //Buscar equipamento por contrato Leasing
     public List<Equipamento> findByContratoLeasing(Long leasingId) {
-        return equipamentosRepository.findByContratoLeasing(leasingId);
+        return equipamentosRepository.findByContratoLeasing(leasingId)
+                .orElseThrow(() -> new ControllerNotFoundException("Leasing não encontrado : " + leasingId));
     }
 
     //Buscar equipamento por service tag

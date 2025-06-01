@@ -13,7 +13,7 @@ public enum TipoEquipamento {
 
     private int code;
 
-    private TipoEquipamento(int code) {
+    TipoEquipamento(int code) {
         this.code = code;
     }
 
@@ -27,6 +27,6 @@ public enum TipoEquipamento {
                 return value;
             }
         }
-        throw new IllegalArgumentException("Invalid OrderStatus code");
+        throw new IllegalArgumentException("Invalid type code");
     }
 }

@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface EquipamentosRepository extends JpaRepository<Equipamento, Long> {
-    List<Equipamento> findByContratoLeasing(Long contratoLeasing);
+    Optional<List<Equipamento>> findByContratoLeasing(Long contratoLeasing);
     Optional<Equipamento> findByServiceTag(String serviceTag);
 }

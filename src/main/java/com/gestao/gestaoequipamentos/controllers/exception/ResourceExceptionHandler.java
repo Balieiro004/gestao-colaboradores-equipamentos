@@ -85,7 +85,6 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
-
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<StandarError> handleConstraintViolation(ConstraintViolationException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -116,8 +115,6 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
-
-
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<StandarError> handleIllegalState(IllegalStateException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -131,7 +128,4 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
     }
-
-
-
 }
